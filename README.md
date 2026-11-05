@@ -39,3 +39,9 @@ Downloaded data and the database are ignored by Git. Source licence verification
 This is a local development foundation, not a deployed production service. Government budget-document reconciliation, federal-scope validation per record, citizen evidence, complaint routing, authentication, moderation, PostgreSQL and public hosting remain future work. Do not expose the development HTTP server publicly.
 
 The database stores the latest imported version per OCID. Imports retain snapshot metadata, but full historical versions require retaining source snapshots outside Git. Import newer snapshots in chronological order; stale-snapshot rejection is not yet implemented.
+
+## Historical executive pilot
+
+Run `python -m app.server` and open <http://127.0.0.1:8000/api/executive-terms/2019-2023>. Startup loads three source-linked campaign commitments for the 2019–2023 federal presidency. To seed without running the server, use `python -m app.manifesto`.
+
+The campaign roadmap was launched in November 2018 for the 2019 election. We checked the first records against a contemporaneous reprint of the launch text because the original PDF returned HTTP 403. Each record includes its source locator and is marked not assessed. Targets describe campaign commitments, not results or confirmed ministry responsibilities.

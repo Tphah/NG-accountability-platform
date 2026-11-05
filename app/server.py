@@ -7,6 +7,8 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import parse_qs, urlparse
 from pathlib import Path
 
+from app.manifesto import read_term, seed
+
 PAGE = '''<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Nigeria Accountability</title><style>body{font:17px system-ui;background:#f4f7f6;color:#16342d;max-width:1050px;margin:50px auto;padding:20px}header{border-bottom:4px solid #168269;padding-bottom:24px}a{color:#00654d}article{background:white;padding:22px;margin:15px 0;border-radius:10px}input{padding:14px;width:65%;font:inherit}button{padding:14px;font:inherit}small{color:#54665f}pre{white-space:pre-wrap;overflow-wrap:anywhere}table{width:100%;text-align:left}td{padding:10px;border-bottom:1px solid #ddd}</style><header><small>FEDERAL PILOT · ALL SECTORS</small><h1>Nigeria Government Accountability Platform</h1><p>Follow the public record, from money to delivery.</p></header><p>Procurement records from BPP/NOCOPO via the Open Contracting Partnership. Records are source-reported and have not been independently verified. Missing data does not mean zero spending.</p>{body}</html>'''
 
 def handler(database):
@@ -16,6 +18,11 @@ def handler(database):
             params = parse_qs(u.query)
             with sqlite3.connect(database) as db:
                 db.row_factory = sqlite3.Row
+                if u.path == '/api/executive-terms/2019-2023':
+                    result = read_term(db, 'ng-federal-executive-2019-2023')
+                    self.send(200 if result else 404, 'application/json',
+                              json.dumps(result or {'error': 'Term not found'}))
+                    return
                 if u.path == '/health':
                     self.send(200, 'application/json', '{"status":"ok"}')
                     return
@@ -47,6 +54,10 @@ def handler(database):
 
 if __name__ == '__main__':
     p=argparse.ArgumentParser(); p.add_argument('--db',default='data/platform.sqlite'); p.add_argument('--port',type=int,default=8000); a=p.parse_args()
-    if not Path(a.db).exists(): p.error('Run the importer first')
+    from contextlib import closing
+    from app.import_ocds import connect
+    Path(a.db).parent.mkdir(parents=True, exist_ok=True)
+    with closing(connect(a.db)) as db:
+        seed(db)
     print(f'Open http://127.0.0.1:{a.port}',flush=True)
     HTTPServer(('127.0.0.1',a.port),handler(a.db)).serve_forever()

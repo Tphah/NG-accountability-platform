@@ -1,0 +1,29 @@
+{
+  "id": "ng-federal-executive-2019-2023",
+  "level": "Federal",
+  "branch": "Executive",
+  "office": "Presidency",
+  "starts_on": "2019-05-29",
+  "ends_on": "2023-05-29",
+  "officeholders": [
+    {"role": "President", "name": "Muhammadu Buhari"},
+    {"role": "Vice President", "name": "Yemi Osinbajo"}
+  ],
+  "tenure_sources": [
+    "https://statehouse.gov.ng/wed-29-5-19/",
+    "https://statehouse.gov.ng/past-heads-of-state-and-presidents/"
+  ],
+  "source": {
+    "kind": "campaign_roadmap_reprint",
+    "title": "Next Level: APC presidential campaign roadmap",
+    "launched_on": "2018-11-18",
+    "url": "https://thedefenderngr.com/apc-launches-muhammadu-buharis-road-map-for-2019-campaign-titled-next-level/",
+    "original_pdf_url": "https://www.yemiosinbajo.ng/wp-content/uploads/2018/11/NEXT-LEVEL-Road-Map-FINAL.pdf",
+    "verification_note": "Commitments checked against the contemporaneous reprint of the campaign launch text. The original PDF returned HTTP 403 during review."
+  },
+  "commitments": [
+    {"id": "school-remodelling", "sector": "Education", "title": "Remodel schools annually", "target": 10000, "unit": "schools per year", "source_locator": "Roadmap reprint, paragraph beginning ‘Perhaps our biggest ambition yet’"},
+    {"id": "industrial-parks", "sector": "Industry", "title": "Develop industrial parks", "target": 6, "unit": "industrial parks", "source_locator": "Roadmap reprint, paragraph beginning ‘With specific plans underway’"},
+    {"id": "production-centres", "sector": "Industry", "title": "Develop special production and processing centres", "target": 109, "unit": "centres", "source_locator": "Roadmap reprint, paragraph beginning ‘With specific plans underway’"}
+  ]
+}
